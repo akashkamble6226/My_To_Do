@@ -98,9 +98,7 @@ class _MainPageState extends State<MainPage> {
                                   ],
                                 ),
                               )
-                            : Flexible(
-                                child: TaskList(),
-                              ),
+                            : Expanded(child: TaskList()),
                       ),
           ),
         ],

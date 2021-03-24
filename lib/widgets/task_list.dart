@@ -42,114 +42,116 @@ class _TaskListState extends State<TaskList> {
                 style: TextStyle(color: Colors.white),
               ),
             )),
-        ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemCount: myTasks.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
-              children: [
-                Card(
-                  elevation: 15,
-                  color: HexColor('#4A4A4A'),
-                  child: ListTile(
-                    leading: Wrap(
-                      children: [
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 5,
-                            ),
-                            CircleAvatar(
-                              backgroundColor: HexColor('#383838'),
-                              radius: 15,
-                              child: Center(
-                                child: Text(
-                                  (index + 1).toString(),
-                                  style: TextStyle(color: Colors.white),
+        Expanded(
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: myTasks.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Column(
+                children: [
+                  Card(
+                    elevation: 15,
+                    color: HexColor('#4A4A4A'),
+                    child: ListTile(
+                      leading: Wrap(
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 5,
+                              ),
+                              CircleAvatar(
+                                backgroundColor: HexColor('#383838'),
+                                radius: 15,
+                                child: Center(
+                                  child: Text(
+                                    (index + 1).toString(),
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    title: Text(
-                      myTasks[index].title,
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                    subtitle: Text(
-                      myTasks[index].details,
-                      style: TextStyle(color: Colors.white, fontSize: 13),
-                    ),
-                    trailing: Wrap(
-                      direction: Axis.vertical,
-                      children: [
-                        IconButton(
+                            ],
+                          )
+                        ],
+                      ),
+                      title: Text(
+                        myTasks[index].title,
+                        style: TextStyle(color: Colors.white, fontSize: 14),
+                      ),
+                      subtitle: Text(
+                        myTasks[index].details,
+                        style: TextStyle(color: Colors.white, fontSize: 13),
+                      ),
+                      trailing: Wrap(
+                        direction: Axis.vertical,
+                        children: [
+                          IconButton(
+                              icon: Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                print('onclick');
+                                print(myTasks[index].id);
+
+                                Navigator.of(context).pushNamed('/update-page',
+                                    arguments: myTasks[index].id);
+                              }),
+                          IconButton(
                             icon: Icon(
-                              Icons.edit,
+                              Icons.delete,
                               color: Colors.white,
+                              size: 25,
                             ),
                             onPressed: () {
-                              print('onclick');
-                              print(myTasks[index].id);
-
-                              Navigator.of(context).pushNamed('/update-page',
-                                  arguments: myTasks[index].id);
-                            }),
-                        IconButton(
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                          onPressed: () {
-                            showDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                elevation: 25,
-                                backgroundColor: HexColor('#323232'),
-                                title: Text(
-                                  'Is your task finished ?',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 14),
-                                ),
-                                content: Text(
-                                    'You are about to delete the task.',
+                              showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  elevation: 25,
+                                  backgroundColor: HexColor('#323232'),
+                                  title: Text(
+                                    'Is your task finished ?',
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 14)),
-                                actions: [
-                                  TextButton(
+                                        color: Colors.white, fontSize: 14),
+                                  ),
+                                  content: Text(
+                                      'You are about to delete the task.',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 14)),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(
+                                          'Cancle',
+                                          style: TextStyle(color: Colors.white),
+                                        )),
+                                    TextButton(
                                       onPressed: () {
+                                        taskList.delete(myTasks[index].id);
                                         Navigator.of(context).pop();
                                       },
                                       child: Text(
-                                        'Cancle',
+                                        'Delete',
                                         style: TextStyle(color: Colors.white),
-                                      )),
-                                  TextButton(
-                                    onPressed: () {
-                                      taskList.delete(myTasks[index].id);
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(
-                                      'Delete',
-                                      style: TextStyle(color: Colors.white),
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ]),
     );
